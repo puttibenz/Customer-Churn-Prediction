@@ -1,174 +1,100 @@
-📊 Customer Churn Prediction
+# Customer Churn Prediction (End-to-End ML Pipeline)
 
-End-to-end Machine Learning pipeline for predicting customer churn using classification models with imbalance handling and business-driven evaluation.
+## 📌 Project Overview
+This project builds an end-to-end Machine Learning pipeline to predict customer churn in an e-commerce business. 
 
-🎯 Project Objective
+Customer churn directly impacts revenue and long-term growth. The objective of this project is to:
+- Identify customers at high risk of churning.
+- Minimize missed churn cases (False Negatives).
+- Reduce unnecessary retention campaign cost (False Positives).
+- Support a data-driven retention strategy.
 
-Customer churn significantly impacts revenue and long-term growth.
+*The final model achieves near-perfect class separation with strong business interpretability.*
 
-The objective of this project is to:
+---
 
-Predict which customers are likely to churn
+## 📊 Dataset Summary
+- **Total samples:** 5,630+
+- **Target variable:** `Churn` (Binary: 0 = No, 1 = Yes)
+- **Class imbalance:** ~83% non-churn / 17% churn
+- **Features:** Mixed numerical and categorical features, including behavioral and transactional attributes.
 
-Handle class imbalance properly
+---
 
-Compare multiple ML models
+## 🧠 Project Workflow
 
-Select the best model based on business impact
+### Phase 1 – Exploratory Data Analysis (EDA)
+- Analyzed class imbalance.
+- Investigated feature distributions.
+- Identified potential churn drivers.
+- Checked for missing values and outliers.
 
-Translate model outputs into actionable retention strategies
+### Phase 2 – Feature Engineering
+Created additional behavioral indicators to improve model signal strength:
+- `AvgOrderValue`
+- `EngagementScore`
+- `IsInactive`
+- `IsNewCustomer`
 
-📁 Dataset Overview
+### Phase 3 – Modeling Pipeline
+Implemented a production-style ML pipeline:
+- **Data Splitting:** Train/Test split (Stratified).
+- **Preprocessing:** `ColumnTransformer` using `StandardScaler` (numerical) and `OneHotEncoder` (categorical).
+- **Handling Imbalance:** Applied SMOTE (to training set only).
+- **Algorithms Compared:** Logistic Regression, Random Forest, XGBoost.
 
-Binary classification problem (Churn vs Non-Churn)
+> **Note:** All preprocessing and SMOTE steps are embedded inside an `imbalanced-learn` pipeline to prevent data leakage.
 
-Imbalanced dataset (~17% churn rate)
+### Phase 4 – Model Evaluation
+Evaluation metrics used: Precision, Recall, F1-score, ROC-AUC, Confusion Matrix, and ROC Curve comparison.
 
-1,100+ observations
+#### Model Performance Comparison
 
-Behavioral + transactional features
+| Model | ROC-AUC | Recall (Churn) | Precision (Churn) | F1 (Churn) |
+| :--- | :---: | :---: | :---: | :---: |
+| **Logistic Regression** | 0.890 | 0.83 | 0.49 | 0.61 |
+| **Random Forest** | **0.996** | **0.87** | **0.94** | **0.91** |
+| **XGBoost** | 0.980 | 0.79 | 0.88 | 0.84 |
 
-Example features:
+---
 
-Tenure
+## 🏆 Final Model Selection
+**Selected Model: Random Forest**
 
-OrderCount
+**Reasons:**
+- Highest ROC-AUC (0.996).
+- Best balance between Recall and Precision.
+- Only 24 missed churn cases (False Negatives).
+- Only 10 false positive predictions.
+- Strong business cost efficiency.
 
-CashbackAmount
+---
 
-DaySinceLastOrder
+## 💼 Business Impact
+Using the selected model:
+- **166 out of 190** churn cases correctly identified.
+- Very low false positive rate.
+- Enables highly targeted retention campaigns.
+- Minimizes marketing waste.
+- Improves ROI of customer retention efforts.
 
-HourSpendOnApp
+*The model can be deployed as an early warning system for churn prevention.*
 
-CouponUsed
+---
 
-⚙️ Project Workflow
+## 🧩 Tech Stack
+- **Python**
+- **Pandas / NumPy** (Data Manipulation)
+- **Scikit-learn** (Machine Learning Pipeline)
+- **Imbalanced-learn** (SMOTE)
+- **XGBoost** (Advanced Modeling)
+- **Matplotlib / Seaborn** (Data Visualization)
 
-The project follows a structured ML pipeline:
+---
 
-Phase 1 — Data Preparation
+## 🚀 How to Run
 
-Data cleaning
-
-Missing value handling
-
-Exploratory data analysis
-
-Phase 2 — Feature Engineering
-
-AvgOrderValue
-
-EngagementScore
-
-IsInactive
-
-IsNewCustomer
-
-Behavioral feature combinations
-
-Phase 3 — Modeling Pipeline
-
-Key principles:
-
-Train/Test split before preprocessing
-
-No data leakage
-
-SMOTE applied only on training data
-
-ColumnTransformer for clean preprocessing
-
-Models implemented:
-
-Logistic Regression
-
-Random Forest
-
-XGBoost
-
-📈 Model Evaluation
-
-Evaluation metrics used:
-
-Precision
-
-Recall
-
-F1-score
-
-ROC-AUC
-
-Confusion Matrix
-
-Threshold tuning
-
-Business cost analysis
-
-🔎 Performance Comparison
-Model	ROC-AUC	Recall (Churn)	Precision (Churn)	F1 (Churn)
-Logistic Regression	0.89	0.83	0.49	0.61
-XGBoost	0.98	0.79	0.88	0.84
-Random Forest	0.996	0.87	0.94	0.91
-🏆 Selected Model: Random Forest
-
-Selected due to:
-
-Highest ROC-AUC
-
-Strong balance between Recall and Precision
-
-Low False Positives (cost-efficient campaigns)
-
-Low False Negatives (captures most churners)
-
-Confusion Matrix (Random Forest):
-
-True Positives: 166
-
-False Negatives: 24
-
-False Positives: 10
-
-💼 Business Impact
-
-With the selected model:
-
-Detects 87% of churners
-
-Minimizes unnecessary retention campaigns
-
-Reduces churn-related revenue loss
-
-Enables targeted retention strategy
-
-Example business strategy:
-
-Trigger campaign if DaySinceLastOrder > threshold
-
-Focus early engagement on new customers
-
-Reward high-engagement users to increase loyalty
-
-🧠 Advanced Considerations
-
-Class imbalance handled using SMOTE
-
-Threshold optimization based on business cost
-
-Feature importance analysis for interpretability
-
-Pipeline design prevents data leakage
-
-🛠️ Tech Stack
-
-Python
-
-Pandas
-
-Scikit-learn
-
-XGBoost
-
-Imbalanced-learn
-
-Matplotlib / Seaborn
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repository-url>
+   cd <repository-folder>
