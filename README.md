@@ -159,6 +159,4 @@ streamlit run app/streamlit_app.py
 - **Pipeline Encapsulation:** SMOTE oversampling and `StandardScaler` are wrapped inside `imbalanced-learn` pipelines, fitting exclusively on training folds during cross-validation/fit.
 - **Full Model Card:** Detailed evaluation, ethics, limitations, and governance documentation are available in [`MODEL_CARD.md`](MODEL_CARD.md).
 
----
 
-## 📜 License
